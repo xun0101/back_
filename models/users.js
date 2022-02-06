@@ -25,14 +25,15 @@ const UserSchema = new Schema({
     required: [true, '沒有使用者分類']
   },
   tokens: {
-    type: [
-      {
-        access_token: String,
-        refresh_token: String,
-        id_token: String,
-        jwt: String
-      }
-    ]
+    // type: [
+    //   {
+    //     access_token: String,
+    //     refresh_token: String,
+    //     id_token: String,
+    //     jwt: String
+    //   }
+    // ]
+    type: [String]
   },
   // 大頭貼
   avatar: {

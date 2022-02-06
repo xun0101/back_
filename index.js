@@ -30,6 +30,7 @@ app.use((_, req, res, next) => {
 app.use('/users', usersRouter)
 
 app.all('*', (req, res) => {
+  console.log(req.body)
   res.status(404).send({ success: false, message: '找不到' })
 })
 
