@@ -104,12 +104,7 @@ export const signInLine = async (req, res) => {
     result.account = decoded.name
 
     // 把序號存入使用者資料
-    result.tokens.push({
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      id_token: data.id_token,
-      jwt: myjwt
-    })
+    result.tokens.push(myjwt)
 
     // 儲存之前不驗證就存入
     result.save({ validateBeforeSave: false })
@@ -129,24 +124,16 @@ export const signInLine = async (req, res) => {
 
 export const signInLineData = async (req, res) => {
   try {
-    // 從 header 驗證取出 jwt，將 Bearer Token 取代成 Token
     const token = req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : ''
-    // console.log(token)
-    // 如果有 jwt
     if (token.length > 0) {
-    // 解碼 jwt
       const decoded = jwt.verify(token, process.env.SECRET)
-      console.log(decoded)
-      // 取出裡面紀錄的使用者 id
       const _id = decoded._id
-      // 查詢是否有使用者資料有 jwt 紀錄的 _id
       req.user = await users.findOne({ _id })
       console.log(req.user.name)
 
       res.status(200).send({
         success: true,
         message: '登入成功',
-        // result: req.user
         token: token,
         name: req.user.name,
         account: req.user.name,
@@ -154,12 +141,10 @@ export const signInLineData = async (req, res) => {
         role: req.user.role
       })
     } else {
-    // 沒有 jwt，觸發錯誤，讓程式進 catch
       throw new Error()
     }
   } catch (error) {
     console.log(error)
-    // .send() 送資料出去
     res.status(401).send({
       success: false,
       message: error
@@ -167,19 +152,16 @@ export const signInLineData = async (req, res) => {
   }
   console.log('signInLineData Line登入換資料')
 }
-// getUsers 取得所有使用者資料  /  GET http://localhost:xx/users
+
 export const getUsers = async (req, res) => {
-  // 驗證權限是否為管理員
   if (req.user.role !== 1) {
     res.status(403).send({
       success: false,
       message: '沒有權限'
     })
-    // 驗證沒過就不跑接下來的程式，也可以後面都用 else 包起來
     return
   }
   try {
-    // 尋找所有使用者
     const result = await users.find()
     res.status(200).send({
       success: true,
@@ -195,7 +177,6 @@ export const getUsers = async (req, res) => {
   console.log('getUsers 取得所有使用者資料')
 }
 
-// extend 更新 token  /  POST http://localhost:xx/users/extend
 export const extend = async (req, res) => {
   // 拿舊 token 換新 token
   try {

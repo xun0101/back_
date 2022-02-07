@@ -15,7 +15,7 @@ import auth from '../middleware/auth.js'
 const router = express.Router()
 
 router.post('/', register)
-router.get('/signInLine', signInLine)
+router.get('/line', signInLine)
 router.post('/login', content('application/json'), login)
 router.delete('/logout', auth, logout)
 router.get('/signInLineData', signInLineData)
