@@ -138,7 +138,8 @@ export const signInLineData = async (req, res) => {
         name: req.user.name,
         account: req.user.name,
         avatar: req.user.avatar,
-        role: req.user.role
+        role: req.user.role,
+        cart: req.user.cart
       })
     } else {
       throw new Error()
@@ -223,7 +224,8 @@ export const getUserInfo = async (req, res) => {
         account: req.user.account,
         name: req.user.name,
         role: req.user.role,
-        avatar: req.user.avatar
+        avatar: req.user.avatar,
+        cart: req.user.cart
       }
     })
   } catch (error) {

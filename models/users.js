@@ -7,14 +7,11 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   account: {
     type: String,
-    minlength: [5, '帳號最少須 5 個字'],
-    maxlength: [20, '帳號最多 20 個字'],
-    unique: true
+    default: ''
   },
   password: {
     type: String,
-    minlength: [4, '密碼最少須 4 個字'],
-    maxlength: [20, '密碼最多 20 個字']
+    default: ''
   },
   role: {
     // 0 一般會員
