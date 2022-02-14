@@ -4,6 +4,7 @@ import axios from 'axios'
 import Qs from 'qs'
 import { inspect } from 'util' // 展開 [object Object] 套件
 import md5 from 'md5'
+import products from '../models/products.js'
 
 export const register = async (req, res) => {
   try {
@@ -235,4 +236,65 @@ export const getUserInfo = async (req, res) => {
     })
   }
   console.log('getUserInfo 抓取使用者資料')
+}
+
+export const addcart = async (req, res) => {
+  console.log(78910)
+  try {
+    const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+    if (idx > -1) {
+      req.user.cart[idx].quantity += req.body.quantity
+    } else {
+      const result = await products.findById(req.body.product)
+      if (!result || !result.sell) {
+        res.status(404).send({ success: false, message: '商品不存在' })
+        return
+      }
+      req.user.cart.push(req.body)
+    }
+    await req.user.save()
+    res.status(200).send({ success: true, message: '', result: req.user.cart.length })
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(404).send({ success: false, message: '找不到' })
+    } else if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      res.status(400).send({ success: false, message: error.errors[key].message })
+      console.log(error)
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+}
+
+export const getcart = async (req, res) => {
+  try {
+    const { cart } = await users.findById(req.user._id, 'cart').populate('cart.product')
+    res.status(200).send({ success: true, message: '', result: cart })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
+
+export const editcart = async (req, res) => {
+  try {
+    if (req.body.quantity === 0) {
+      const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+      if (idx > -1) {
+        req.user.cart.splice(idx, 1)
+      }
+      await req.user.save()
+      res.status(200).send({ success: true, message: '' })
+    } else {
+      const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+      if (idx > -1) {
+        req.user.cart[idx].quantity = req.body.quantity
+      }
+      await req.user.save()
+      await req.user.save()
+      res.status(200).send({ success: true, message: '' })
+    }
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
 }

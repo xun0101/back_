@@ -7,7 +7,10 @@ import {
   signInLineData,
   getUsers,
   getUserInfo,
-  extend
+  extend,
+  addcart,
+  getcart,
+  editcart
 } from '../controllers/users.js'
 import content from '../middleware/content.js'
 import auth from '../middleware/auth.js'
@@ -21,6 +24,9 @@ router.delete('/logout', auth, logout)
 router.get('/signInLineData', signInLineData)
 router.get('/all', auth, getUsers)
 router.get('/me', auth, getUserInfo)
+router.post('/me/cart', auth, addcart)
+router.get('/me/cart', auth, getcart)
+router.patch('/me/cart', auth, editcart)
 router.post('/extend', auth, extend)
 
 export default router
