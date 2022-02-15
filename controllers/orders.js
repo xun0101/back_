@@ -1,5 +1,5 @@
-import orders from '../models/orders.js'
 import users from '../models/users.js'
+import orders from '../models/orders.js'
 
 export const checkout = async (req, res) => {
   try {
@@ -41,7 +41,6 @@ export const checkout = async (req, res) => {
     await req.user.save()
     res.status(200).send({ success: true, message: '', result: result._id })
   } catch (error) {
-    console.log(error)
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       res.status(400).send({ success: false, message: error.errors[key].message })
@@ -65,6 +64,7 @@ export const getAllOrders = async (req, res) => {
     const result = await orders.find().populate('user', 'account').populate('products.product')
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
+    console.log(error)
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }
