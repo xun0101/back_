@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
 
 const orderSchema = new mongoose.Schema({
-  news: {
-    type: String
+  new: {
+    type: String,
+    default: ''
   },
   date: {
     type: Date,
