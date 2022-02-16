@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const orderSchema = new mongoose.Schema({
+const newsSchema = new mongoose.Schema({
   new: {
     type: String,
     default: ''
@@ -11,4 +11,4 @@ const orderSchema = new mongoose.Schema({
   }
 }, { versionKey: false })
 
-export default mongoose.model('news', orderSchema)
+export default mongoose.model('news', newsSchema)

@@ -3,6 +3,7 @@ import users from '../models/users.js'
 
 export default async (req, res, next) => {
   try {
+    console.log(req.body)
     const token = req.headers.authorization?.replace('Bearer ', '') || ''
     if (token.length > 0) {
       const decoded = jwt.decode(token)
