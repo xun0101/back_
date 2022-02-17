@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema({
   },
   state: {
     type: Boolean,
-    default: 'false'
+    default: false
   },
   date: {
     type: Date,
