@@ -26,7 +26,7 @@ export const getAllNews = async (req, res) => {
 
 export const delnews = async (req, res) => {
   try {
-    console.log(req.params)
+    console.log(req.params.id)
     const result = await news.findByIdAndDelete(req.params.id)
     if (result === null) {
       res.status(404)
@@ -37,6 +37,7 @@ export const delnews = async (req, res) => {
     }
   } catch (error) {
     if (error.name === 'CastError') {
+      console.log(error)
       res.status(404)
       res.send({ success: false, message: '找不到資料' })
     } else {

@@ -14,5 +14,6 @@ const router = express.Router()
 router.post('/', auth, content('application/json'), checkout)
 router.get('/me', auth, getMyOrders)
 router.get('/all', auth, admin, getAllOrders)
+// router.patch('/edit/:id', auth, admin, editorders)
 
 export default router
