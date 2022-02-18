@@ -6,6 +6,7 @@ import usersRouter from './routes/users.js'
 import productsRouter from './routes/products.js'
 import ordersRouter from './routes/orders.js'
 import newsRouter from './routes/news.js'
+import commentsRouter from './routes/comments.js'
 
 mongoose.connect(process.env.DB_URL, () => {
   console.log('MongoDB Connected')
@@ -34,6 +35,7 @@ app.use('/users', usersRouter)
 app.use('/products', productsRouter)
 app.use('/orders', ordersRouter)
 app.use('/news', newsRouter)
+app.use('/comments', commentsRouter)
 
 app.all('*', (req, res) => {
   console.log(req.body)
