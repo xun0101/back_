@@ -6,7 +6,8 @@ import admin from '../middleware/admin.js'
 import {
   checkout,
   getMyOrders,
-  getAllOrders
+  getAllOrders,
+  finishorder
 } from '../controllers/orders.js'
 
 const router = express.Router()
@@ -14,6 +15,6 @@ const router = express.Router()
 router.post('/', auth, content('application/json'), checkout)
 router.get('/me', auth, getMyOrders)
 router.get('/all', auth, admin, getAllOrders)
-// router.patch('/edit/:id', auth, admin, editorders)
+router.patch('/:id', auth, admin, finishorder)
 
 export default router

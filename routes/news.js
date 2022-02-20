@@ -15,6 +15,6 @@ const router = express.Router()
 router.post('/', auth, admin, show)
 router.get('/all', getAllNews)
 router.delete('/dels/:id', auth, admin, delnews)
-router.patch('/:id', auth, admin, content('multipart/form-data'), editnews)
+router.patch('/:id', auth, admin, content('application/json'), editnews)
 
 export default router
