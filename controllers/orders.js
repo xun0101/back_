@@ -1,5 +1,6 @@
 import users from '../models/users.js'
 import orders from '../models/orders.js'
+import bot from '../bot/bot.js'
 
 export const checkout = async (req, res) => {
   try {
@@ -76,6 +77,8 @@ export const finishorder = async (req, res) => {
   try {
     const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true })
     res.status(200).send({ success: true, message: '', result })
+    const user = await users.findById(result.user)
+    bot.push(user.line, `訂單 ${result._id} 已完成`)
   } catch (error) {
     if (error.name === 'CastError') {
       res.status(404).send({ success: false, message: '找不到' })
