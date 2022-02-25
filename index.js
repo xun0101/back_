@@ -7,6 +7,7 @@ import productsRouter from './routes/products.js'
 import ordersRouter from './routes/orders.js'
 import newsRouter from './routes/news.js'
 import commentsRouter from './routes/comments.js'
+import waitsRouter from './routes/waits.js'
 import routeBot from './bot/index.js'
 
 mongoose.connect(process.env.DB_URL, () => {
@@ -37,6 +38,7 @@ app.use('/products', productsRouter)
 app.use('/orders', ordersRouter)
 app.use('/news', newsRouter)
 app.use('/comments', commentsRouter)
+app.use('/waits', waitsRouter)
 app.use('/bot', routeBot)
 
 app.all('*', (req, res) => {
