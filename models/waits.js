@@ -9,7 +9,11 @@ const waitsSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  finish: {
+  number: {
+    type: Number,
+    required: [true, '缺少人數']
+  },
+  state: {
     type: Boolean,
     default: false
   },
