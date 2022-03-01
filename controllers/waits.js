@@ -20,7 +20,7 @@ export const addwait = async (req, res) => {
 
 export const getAllwaits = async (req, res) => {
   try {
-    const result = await waits.find().populate('user')
+    const result = await waits.find().sort({ date: -1 }).limit(5).populate('user')
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
