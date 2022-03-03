@@ -79,7 +79,7 @@ export const finishorder = async (req, res) => {
     res.status(200).send({ success: true, message: '', result })
     const user = await users.findById(result.user)
     const date = result.date.getMinutes()
-    bot.push(user.line, `訂單 ${date}號 已完成`)
+    bot.push(user.line, `訂單編號${date}號，您的餐點已完成。`)
   } catch (error) {
     if (error.name === 'CastError') {
       res.status(404).send({ success: false, message: '找不到' })
