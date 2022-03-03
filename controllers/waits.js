@@ -35,7 +35,7 @@ export const finishwait = async (req, res) => {
     const result = await waits.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true })
     res.status(200).send({ success: true, message: '', result })
     const user = await users.findById(result.user)
-    const date = result.date.getMinutes()
+    const date = result.date.getMinutes().toString().padStart(2, '0') + result.date.getSeconds().toString().padStart(2, '0')
     bot.push(user.line, `候位編號${date}號，您的位子已安排，保留時間為15分鐘。`)
   } catch (error) {
     if (error.name === 'CastError') {

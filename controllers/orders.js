@@ -78,7 +78,7 @@ export const finishorder = async (req, res) => {
     const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true })
     res.status(200).send({ success: true, message: '', result })
     const user = await users.findById(result.user)
-    const date = result.date.getMinutes()
+    const date = result.date.getMinutes().toString().padStart(2, '0')
     bot.push(user.line, `訂單編號${date}號，您的餐點已完成。`)
   } catch (error) {
     if (error.name === 'CastError') {
