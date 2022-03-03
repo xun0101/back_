@@ -78,7 +78,8 @@ export const finishorder = async (req, res) => {
     const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true })
     res.status(200).send({ success: true, message: '', result })
     const user = await users.findById(result.user)
-    bot.push(user.line, `訂單 ${result._id} 已完成`)
+    const date = result.date.getMinutes()
+    bot.push(user.line, `訂單 ${date}號 已完成`)
   } catch (error) {
     if (error.name === 'CastError') {
       res.status(404).send({ success: false, message: '找不到' })
