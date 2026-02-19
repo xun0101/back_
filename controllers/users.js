@@ -183,7 +183,7 @@ export const extend = async (req, res) => {
   // 拿舊 token 換新 token
   try {
     // 先去找傳進來的 token 是符合使用者資料庫裡的第幾個
-    const idx = req.user.tokens.findIndex(token => req.token)
+    const idx = req.user.tokens.findIndex(token => token === req.token)
     // 簽發驗證序號 有效期為7天
     const token = jwt.sign(
       // jwt 內容資料
